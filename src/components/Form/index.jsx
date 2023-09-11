@@ -27,6 +27,7 @@ function Form(props) {
         <Slider
           label="Difficulty"
           radius="md"
+          defaultValue="4"
           min={1}
           max={5}
           marks={[
