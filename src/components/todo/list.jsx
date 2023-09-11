@@ -1,7 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { SettingContext } from "../../context/settings/index";
-import { Pagination } from "@mantine/core";
+import {
+  Pagination,
+  Container,
+  Card,
+  Text,
+  Badge,
+  Button,
+  Group,
+  CardSection,
+} from "@mantine/core";
 
 function List(props) {
   const settings = useContext(SettingContext);
@@ -21,7 +30,7 @@ function List(props) {
     setEnd(start + settings.itemsPerPage);
   }, [start, settings.itemsPerPage]);
 
-  // shows tasks based on if hideCompleted is true or false
+  // shows tasks based on if hideCompleted is true or false [not implemented yet]
   useEffect(() => {
     setTaskList(props.data.filter((item) => item).slice(start, end));
   }, [settings.hideCompleted, props.data, start, end]);
@@ -37,28 +46,50 @@ function List(props) {
 
   return (
     <>
-      {taskList.map((item) => {
-        return (
-          <div key={item.id}>
-            <p>{item.text}</p>
-            <p>
-              <small>Assigned to: {item.assignee}</small>
-            </p>
-            <p>
-              <small>Difficulty: {item.difficulty}</small>
-            </p>
-            <div onClick={() => props.toggleComplete(item.id)}>
-              Complete: {item.complete.toString()}
+      <Container style={{ minWidth: "65%" }}>
+        {" "}
+        {taskList.map((item) => {
+          return (
+            <div key={item.id}>
+              <Card.Section withBorder>
+                <Group
+                  className="listItemHeader"
+                  position="apart"
+                  style={{ paddingLeft: "1rem" }}
+                >
+                  <Group spacing="xl">
+                    <Badge color="green" variant="filled">
+                      Pending
+                    </Badge>
+
+                    <Text fw={500}>{item.assignee}</Text>
+                  </Group>
+
+                  <Button
+                    color="red"
+                    size="xs"
+                    onClick={() => props.deleteItem(item.id)}
+                  >
+                    X
+                  </Button>
+                </Group>
+              </Card.Section>
+
+              <Card.Section withBorder>
+                <Container size="97.5%" px={0}>
+                  <Text>{item.text}</Text>
+                  <Text align="right">Difficulty: {item.difficulty}</Text>
+                </Container>
+              </Card.Section>
             </div>
-            <button onClick={() => props.deleteItem(item.id)}>Remove</button>
-          </div>
-        );
-      })}
-      <Pagination
-        value={activePage}
-        onChange={setActivePage}
-        total={totalPages}
-      />
+          );
+        })}
+        <Pagination
+          value={activePage}
+          onChange={setActivePage}
+          total={totalPages}
+        />
+      </Container>
     </>
   );
 }

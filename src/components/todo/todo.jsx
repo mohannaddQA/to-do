@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import useForm from "../../hooks/form.jsx";
 import List from "./list.jsx";
+import Form from "../Form/index.jsx";
+import { Group, Container, Title } from "@mantine/core";
 import { v4 as uuid } from "uuid";
 
 const ToDo = () => {
@@ -42,50 +44,32 @@ const ToDo = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <h2>Add To Do Item</h2>
-
-        <label>
-          <span>To Do Item</span>
-          <input
-            onChange={handleChange}
-            name="text"
-            type="text"
-            placeholder="Item Details"
+      <>
+        <Container
+          style={{
+            backgroundColor: "#343a40",
+            color: "white",
+            padding: "2rem",
+          }}
+        >
+          <Title order={2} align="center">
+            To Do List: {incomplete} items pending
+          </Title>
+        </Container>
+        <Group position="apart" grow style={{ margin: "2rem 5rem" }}>
+          <Form
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            incomplete={incomplete}
           />
-        </label>
 
-        <label>
-          <span>Assigned To</span>
-          <input
-            onChange={handleChange}
-            name="assignee"
-            type="text"
-            placeholder="Assignee Name"
+          <List
+            data={list}
+            toggleComplete={toggleComplete}
+            deleteItem={deleteItem}
           />
-        </label>
-
-        <label>
-          <span>Difficulty</span>
-          <input
-            onChange={handleChange}
-            defaultValue={defaultValues.difficulty}
-            type="range"
-            min={1}
-            max={5}
-            name="difficulty"
-          />
-        </label>
-
-        <label>
-          <button type="submit">Add Item</button>
-        </label>
-      </form>
-      <List
-        data={list}
-        toggleComplete={toggleComplete}
-        deleteItem={deleteItem}
-      />
+        </Group>
+      </>
     </>
   );
 };

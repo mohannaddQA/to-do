@@ -15,9 +15,9 @@ function App() {
         <h2>this is also sent from the app</h2>
       </Example> */}
       <SettingsProvider>
-        <Header />
+        {/* <Header /> */}
         <ToDo />
-        <Footer />
+        {/* <Footer /> */}
         {/* whatever here is considered {children} and sent to the SettingsProvider component */}
       </SettingsProvider>
     </>

@@ -1,9 +1,8 @@
 import React from "react";
 
-import { TextInput, Checkbox, Button, Group, Box } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { TextInput, Stack, Button, Slider, Title } from "@mantine/core";
 
-function Form() {
+function Form(props) {
   return (
     <form onSubmit={props.handleSubmit} style={{ width: "10%" }}>
       <Stack spacing="xl">
@@ -28,6 +27,7 @@ function Form() {
         <Slider
           label="Difficulty"
           radius="md"
+          value={4}
           min={1}
           max={5}
           marks={[
