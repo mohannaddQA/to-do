@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { useEffect, createContext, useContext, useState } from "react";
 /* ---------------------------------------------------------------------------- */
 /*TO SET A GLOBAL STATE WE NEED TO CREATE A CONTEXT RELATED TO OUR GLOBAL STATE */
 export const SettingContext = createContext();
@@ -12,6 +12,28 @@ export const SettingsProvider = (props) => {
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [hideCompleted, setHideCompleted] = useState(true);
   const [sortBy, setSortBy] = useState("difficulty");
+
+  //this function will save my current settings into local storage
+  const saveSettingsInLocalStorage = () => {
+    localStorage.setItem(
+      "toDoSettings",
+      JSON.stringify({
+        itemsPerPage: itemsPerPage,
+        hideCompleted: hideCompleted,
+        sortBy: sortBy.toLowerCase(),
+      })
+    );
+  };
+  // on every refresh i will retrieve my saved settings from the local storage
+  useEffect(() => {
+    if (localStorage.getItem("toDoSettings")) {
+      let savedSettings = JSON.parse(localStorage.getItem("toDoSettings"));
+      setItemsPerPage(savedSettings.itemsPerPage);
+      setHideCompleted(savedSettings.hideCompleted);
+      setSortBy(savedSettings.sortBy);
+    }
+  }, []);
+
   const sharedValues = {
     itemsPerPage,
     setItemsPerPage,
@@ -19,6 +41,7 @@ export const SettingsProvider = (props) => {
     setHideCompleted,
     sortBy,
     setSortBy,
+    saveSettingsInLocalStorage,
   };
   return (
     <SettingContext.Provider value={sharedValues}>
