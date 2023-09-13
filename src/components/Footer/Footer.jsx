@@ -12,8 +12,6 @@ function Footer(props) {
     >
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <p>&copy; {new Date().getFullYear()} Your Company Name</p>
-        <p>123 Main Street, City, Country</p>
-        <p>Email: info@yourcompany.com</p>
       </div>
     </footer>
   );
