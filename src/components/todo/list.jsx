@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-
 import { SettingContext } from "../../context/settings/index";
 import {
   Pagination,
@@ -32,56 +31,107 @@ function List(props) {
 
   // shows tasks based on if hideCompleted is true or false [not implemented yet]
   useEffect(() => {
-    setTaskList(props.data.filter((item) => item).slice(start, end));
+    settings.hideCompleted
+      ? setTaskList(
+          props.data.filter((item) => !item.complete).slice(start, end)
+        )
+      : setTaskList(props.data.slice(start, end));
   }, [settings.hideCompleted, props.data, start, end]);
 
   // determines total amount of pages for <Pagination /> component
   useEffect(() => {
-    setTotalPages(
-      Math.ceil(
-        props.data.filter((item) => item).length / settings.itemsPerPage
-      )
-    );
+    settings.hideCompleted
+      ? setTotalPages(
+          Math.ceil(
+            props.data.filter((item) => !item.complete).length /
+              settings.itemsPerPage
+          )
+        )
+      : setTotalPages(Math.ceil(props.data.length / settings.itemsPerPage));
   }, [props.data, settings.hideCompleted, settings.itemsPerPage]);
 
   return (
     <>
-      <Container style={{ minWidth: "65%" }}>
+      <Container withBorder style={{ minWidth: "65%", padding: "0" }}>
         {" "}
         {taskList.map((item) => {
           return (
-            <div key={item.id}>
-              <Card.Section withBorder>
-                <Group
-                  className="listItemHeader"
-                  position="apart"
-                  style={{ paddingLeft: "1rem" }}
-                >
-                  <Group spacing="xl">
-                    <Badge color="green" variant="filled">
-                      Pending
-                    </Badge>
-
-                    <Text fw={500}>{item.assignee}</Text>
-                  </Group>
-
-                  <Button
-                    color="red"
-                    size="xs"
-                    onClick={() => props.deleteItem(item.id)}
+            <Card
+              mb="20px"
+              key={item.id}
+              shadow="sm"
+              radius="md"
+              withBorder
+              style={{ padding: "0" }}
+            >
+              {" "}
+              <div>
+                <Card.Section withBorder>
+                  <Group
+                    className="listItemHeader"
+                    position="apart"
+                    style={{ padding: "0" }}
                   >
-                    X
-                  </Button>
-                </Group>
-              </Card.Section>
+                    <Group spacing="xl" withBorder>
+                      {item.complete ? (
+                        <Badge
+                          color="red"
+                          variant="filled"
+                          style={{ marginLeft: "17px" }}
+                        >
+                          Complete
+                        </Badge>
+                      ) : (
+                        <Badge
+                          color="green"
+                          variant="filled"
+                          style={{ marginLeft: "17px" }}
+                        >
+                          Pending
+                        </Badge>
+                      )}
+                      <Text fw={500}>assigned to {item.assignee}</Text>
+                    </Group>
 
-              <Card.Section withBorder>
-                <Container size="97.5%" px={0}>
-                  <Text>{item.text}</Text>
-                  <Text align="right">Difficulty: {item.difficulty}</Text>
-                </Container>
-              </Card.Section>
-            </div>
+                    <Button
+                      color="red"
+                      size="xs"
+                      onClick={() => props.deleteItem(item.id)}
+                      style={{ marginRight: "17px" }}
+                    >
+                      X
+                    </Button>
+                  </Group>
+                </Card.Section>
+
+                <Card.Section withBorder>
+                  <Container size="97.5%" px={0}>
+                    <Text
+                      style={{ marginLeft: "6px", display: "inline-block" }}
+                    >
+                      {item.text}
+                    </Text>
+
+                    <CardSection withBorder>
+                      {" "}
+                      <Group position="apart">
+                        <Text style={{ marginLeft: "18px", fontSize: "20px" }}>
+                          Difficulty: {item.difficulty}
+                        </Text>
+                        <Button
+                          style={{ marginRight: "17px" }}
+                          radius="xl"
+                          size="xs"
+                          onClick={() => props.toggleComplete(item.id)}
+                        >
+                          Complete: {item.complete.toString()}
+                        </Button>
+                      </Group>
+                    </CardSection>
+                  </Container>
+                </Card.Section>
+              </div>
+            </Card>
           );
         })}
         <Pagination

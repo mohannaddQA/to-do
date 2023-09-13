@@ -3,7 +3,9 @@ import Header from "./components/Header/Header.jsx";
 import ToDo from "./components/todo/todo.jsx";
 import { SettingsProvider } from "./context/settings/index.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import SettingsPage from "./components/SettingsForm/SittingsForm.jsx";
 // import Example from "../Example.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -15,9 +17,15 @@ function App() {
         <h2>this is also sent from the app</h2>
       </Example> */}
       <SettingsProvider>
-        {/* <Header /> */}
-        <ToDo />
-        {/* <Footer /> */}
+        <Header />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<ToDo />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Routes>
+        </BrowserRouter>
+        ;
+        <Footer />
         {/* whatever here is considered {children} and sent to the SettingsProvider component */}
       </SettingsProvider>
     </>
