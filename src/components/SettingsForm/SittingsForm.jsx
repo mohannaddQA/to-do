@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { SettingContext } from "../../context/settings/index";
 import {
@@ -31,6 +31,10 @@ function SettingsPage() {
     }));
   };
 
+  useEffect(() => {
+    // Update localStorage whenever hideCompleted or itemsPerPage changes
+    settings.saveSettingsInLocalStorage();
+  }, [hideCompleted, updatedSettings.itemsPerPage, settings]);
   const handleSubmit = (event) => {
     event.preventDefault();
     settings.setHideCompleted(hideCompleted);

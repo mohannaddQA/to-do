@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "@mantine/core";
-
+import { Link } from "react-router-dom";
 function Header(props) {
   return (
     <header
@@ -24,9 +24,11 @@ function Header(props) {
         >
           <li style={{ marginRight: "1rem" }}>
             <NavLink label="Home" component="a" href="/" />
+            {/* <Link to="/">home</Link> */}
           </li>
           <li>
             <NavLink label="Settings" component="a" href="/settings" />
+            {/* <Link to="/settings">settings</Link> */}
           </li>
         </ul>
       </nav>

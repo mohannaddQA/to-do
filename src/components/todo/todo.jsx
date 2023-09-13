@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
+import { SettingContext } from "../../context/settings/index";
 import useForm from "../../hooks/form.jsx";
 import List from "./list.jsx";
 import Form from "../Form/index.jsx";
@@ -6,13 +7,23 @@ import { Group, Container, Title } from "@mantine/core";
 import { v4 as uuid } from "uuid";
 
 const ToDo = () => {
+  const settings = useContext(SettingContext);
+
   const [defaultValues] = useState({
     difficulty: 4,
   });
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
-
+  useEffect(() => {
+    // Load saved settings from localStorage
+    if (localStorage.getItem("toDoSettings")) {
+      const savedSettings = JSON.parse(localStorage.getItem("toDoSettings"));
+      settings.setItemsPerPage(savedSettings.itemsPerPage);
+      settings.setHideCompleted(savedSettings.hideCompleted);
+      settings.setSortBy(savedSettings.sortBy);
+    }
+  }, []);
   function addItem(item) {
     item.id = uuid();
     item.complete = false;
