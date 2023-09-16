@@ -24,6 +24,18 @@ const ToDo = () => {
       settings.setSortBy(savedSettings.sortBy);
     }
   }, []);
+
+  // Load tasks from local storage when component mounts
+  useEffect(() => {
+    const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    setList(savedTasks);
+  }, []);
+
+  // Save tasks to local storage whenever taskList changes
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(list));
+  }, [list]);
+
   function addItem(item) {
     item.id = uuid();
     item.complete = false;
