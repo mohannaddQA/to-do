@@ -5,6 +5,7 @@ import List from "./list.jsx";
 import Form from "../Form/index.jsx";
 import { Group, Container, Title } from "@mantine/core";
 import { v4 as uuid } from "uuid";
+import Auth from "../../auth/components/auth";
 
 const ToDo = () => {
   const settings = useContext(SettingContext);
@@ -67,7 +68,8 @@ const ToDo = () => {
 
   return (
     <>
-      <>
+      {" "}
+      <Auth>
         <Container
           style={{
             backgroundColor: "#343a40",
@@ -78,21 +80,25 @@ const ToDo = () => {
           <Title order={2} align="center">
             To Do List: {incomplete} items pending
           </Title>
-        </Container>
+        </Container>{" "}
         <Group position="apart" grow style={{ margin: "2rem 5rem" }}>
-          <Form
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-            incomplete={incomplete}
-          />
-
+          <Auth capability="create">
+            <Form
+              handleSubmit={handleSubmit}
+              handleChange={handleChange}
+              incomplete={incomplete}
+            />
+          </Auth>
+        </Group>{" "}
+        <Auth capability="read">
+          {" "}
           <List
             data={list}
             toggleComplete={toggleComplete}
             deleteItem={deleteItem}
           />
-        </Group>
-      </>
+        </Auth>
+      </Auth>
     </>
   );
 };
