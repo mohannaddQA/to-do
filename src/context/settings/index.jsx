@@ -14,7 +14,11 @@ export const SettingsProvider = (props) => {
   const [sortBy, setSortBy] = useState("difficulty");
 
   //this function will save my current settings into local storage
-  const saveSettingsInLocalStorage = () => {
+  const saveSettingsInLocalStorage = (
+    itemsPerPage = 3,
+    hideCompleted = true,
+    sortBy = "difficulty"
+  ) => {
     localStorage.setItem(
       "toDoSettings",
       JSON.stringify({
