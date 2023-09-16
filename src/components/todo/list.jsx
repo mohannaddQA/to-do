@@ -10,7 +10,7 @@ import {
   Group,
   CardSection,
 } from "@mantine/core";
-
+import Auth from "../../auth/components/auth";
 function List(props) {
   const settings = useContext(SettingContext);
   const [activePage, setActivePage] = useState(1);
@@ -92,15 +92,16 @@ function List(props) {
                       )}
                       <Text fw={500}>assigned to {item.assignee}</Text>
                     </Group>
-
-                    <Button
-                      color="red"
-                      size="xs"
-                      onClick={() => props.deleteItem(item.id)}
-                      style={{ marginRight: "17px" }}
-                    >
-                      X
-                    </Button>
+                    <Auth capability="delete">
+                      <Button
+                        color="red"
+                        size="xs"
+                        onClick={() => props.deleteItem(item.id)}
+                        style={{ marginRight: "17px" }}
+                      >
+                        X
+                      </Button>
+                    </Auth>
                   </Group>
                 </Card.Section>
 
@@ -118,14 +119,17 @@ function List(props) {
                         <Text style={{ marginLeft: "18px", fontSize: "20px" }}>
                           Difficulty: {item.difficulty}
                         </Text>
-                        <Button
-                          style={{ marginRight: "17px" }}
-                          radius="xl"
-                          size="xs"
-                          onClick={() => props.toggleComplete(item.id)}
-                        >
-                          Complete: {item.complete.toString()}
-                        </Button>
+                        <Auth capability="update">
+                          {" "}
+                          <Button
+                            style={{ marginRight: "17px" }}
+                            radius="xl"
+                            size="xs"
+                            onClick={() => props.toggleComplete(item.id)}
+                          >
+                            Complete: {item.complete.toString()}
+                          </Button>
+                        </Auth>
                       </Group>
                     </CardSection>
                   </Container>
