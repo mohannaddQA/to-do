@@ -40,10 +40,7 @@ function SettingsPage() {
     event.preventDefault();
     settings.setHideCompleted(hideCompleted);
     settings.setItemsPerPage(updatedSettings.itemsPerPage);
-    settings.saveSettingsInLocalStorage(
-      updatedSettings.itemsPerPage,
-      hideCompleted
-    );
+    settings.saveSettingsInLocalStorage();
     setSubmitted(true);
   };
 
