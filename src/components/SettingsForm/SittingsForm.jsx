@@ -30,16 +30,20 @@ function SettingsPage() {
       itemsPerPage: value,
     }));
   };
+  /* this use effect was supposed to trigger the saving to local storage but it went wrong because when it runs on the first render it resits the local storage , i will keep it for studying purpose for later */
+  // useEffect(() => {
+  //   // Update localStorage whenever hideCompleted or itemsPerPage changes
+  //   settings.saveSettingsInLocalStorage();
+  // }, [hideCompleted, updatedSettings.itemsPerPage, settings]);
 
-  useEffect(() => {
-    // Update localStorage whenever hideCompleted or itemsPerPage changes
-    settings.saveSettingsInLocalStorage();
-  }, [hideCompleted, updatedSettings.itemsPerPage, settings]);
   const handleSubmit = (event) => {
     event.preventDefault();
     settings.setHideCompleted(hideCompleted);
     settings.setItemsPerPage(updatedSettings.itemsPerPage);
-    settings.saveSettingsInLocalStorage();
+    settings.saveSettingsInLocalStorage(
+      updatedSettings.itemsPerPage,
+      hideCompleted
+    );
     setSubmitted(true);
   };
 
