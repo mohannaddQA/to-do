@@ -28,7 +28,7 @@ const ToDo = () => {
 
   // Load tasks from api when component mounts
   useEffect(() => {
-    const url = `https://auth-api-33k1.onrender.com/api/v1/todo`;
+    const url = `https://todo-api-75wk.onrender.com/api/v1/todo`;
     axios.get(url).then((res) => {
       console.log("on mount ", res.data);
       setList(res.data);
@@ -53,7 +53,7 @@ const ToDo = () => {
       complete: item.complete,
     };
     axios
-      .post(`https://auth-api-33k1.onrender.com/api/v1/todo`, obj)
+      .post(`https://todo-api-75wk.onrender.com/api/v1/todo`, obj)
       .then((response) => {
         console.log("res after adding", response);
         setList([...list, item]);
@@ -64,7 +64,7 @@ const ToDo = () => {
   }
 
   function deleteItem(id) {
-    axios.delete(`https://auth-api-33k1.onrender.com/api/v1/todo/${id}`); //==> no need to await this , because my data will be handled directly from local storage
+    axios.delete(`https://todo-api-75wk.onrender.com/api/v1/todo/${id}`); //==> no need to await this , because my data will be handled directly from local storage
     /* this is not a good practice but any way let's get the data again :( */
     // const res =  axios.get(
     //   `https://auth-api-33k1.onrender.com/api/v1/todo`
@@ -85,7 +85,7 @@ const ToDo = () => {
           difficulty: item.difficulty,
           complete: item.complete,
         };
-        const url = `https://auth-api-33k1.onrender.com/api/v1/todo/${id}`;
+        const url = `https://todo-api-75wk.onrender.com/api/v1/todo/${id}`;
         axios.put(url, obj).then((res) => {
           console.log(res);
         });

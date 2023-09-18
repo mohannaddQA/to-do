@@ -81,7 +81,7 @@ then read from local storage
       role: role,
     };
     try {
-      const url = `https://auth-api-33k1.onrender.com/signup`;
+      const url = `https://todo-api-75wk.onrender.com/signup`;
       const res = await axios.post(url, obj);
       console.log(res.data);
       console.log("successful hit");
@@ -106,7 +106,7 @@ then read from local storage
 
     try {
       const response = await superagent
-        .post("https://auth-api-33k1.onrender.com/signin")
+        .post("https://todo-api-75wk.onrender.com/signin")
         .set(
           "authorization",
           `Basic ${base64.encode(`${username}:${password}`)}`
