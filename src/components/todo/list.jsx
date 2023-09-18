@@ -15,9 +15,10 @@ function List(props) {
   const settings = useContext(SettingContext);
   const [activePage, setActivePage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [taskList, setTaskList] = useState([]);
+  const [taskList, setTaskList] = useState(props.data);
   const [start, setStart] = useState(settings.itemsPerPage * (activePage - 1));
   const [end, setEnd] = useState(start + settings.itemsPerPage);
+  console.log("this is the ts=asklist", taskList);
 
   // updates start index for displayed tasks from taskList
   useEffect(() => {
@@ -90,7 +91,7 @@ function List(props) {
                           Pending
                         </Badge>
                       )}
-                      <Text fw={500}>assigned to {item.assignee}</Text>
+                      <Text fw={500}>assigned to {item.assignedTo}</Text>
                     </Group>
                     <Auth capability="delete">
                       <Button
@@ -110,7 +111,9 @@ function List(props) {
                     <Text
                       style={{ marginLeft: "6px", display: "inline-block" }}
                     >
-                      {item.text}
+                      {/* {item.text} */
+                      /* ==> problom that the data comeing from the database is named differently so we have to rename it when it comes but for now i will change the naming here and in the local storage to match the db  */}
+                      {item.item}
                     </Text>
 
                     <CardSection withBorder>
