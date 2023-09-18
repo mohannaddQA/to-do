@@ -9,7 +9,7 @@ function Form(props) {
         <Title order={2}>Add To Do Item</Title>
 
         <TextInput
-          name="text"
+          name="item" //the same as the db
           placeholder="Task Description"
           label="Task"
           withAsterisk
@@ -17,7 +17,7 @@ function Form(props) {
         />
 
         <TextInput
-          name="assignee"
+          name="assignedTo" // the same as the db
           placeholder="Name"
           label="Assign To"
           withAsterisk
